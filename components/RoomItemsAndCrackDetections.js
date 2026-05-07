@@ -27,6 +27,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
+import { BASE_URL } from "../variables";
 
 const { width, height } = Dimensions.get("window");
 
@@ -276,17 +277,14 @@ export default function RoomItemsAndCrackDetections() {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 100000);
 
-      const response = await fetch(
-        "https://disrupt-unfiled-deserve.ngrok-free.dev/analyze",
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Accept: "application/json",
-          },
-          signal: controller.signal,
+      const response = await fetch(`${BASE_URL}/analyze`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
         },
-      );
+        signal: controller.signal,
+      });
 
       clearTimeout(timeout);
 
